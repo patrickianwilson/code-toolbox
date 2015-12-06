@@ -1,0 +1,1 @@
+echo "Setting Up Workstation for Golang Development"
