@@ -1,4 +1,10 @@
 # code-toolbox
-A random "tool box" of code snippets in different languages.  Completely unorganized.
+This project is an attempt to provide quick setup scripts and frequently used code patterns for several prominent programming languages.  It uses the common 
 
-The only organization is at a language level.
+```bash
+curl https://someaddress | bash
+```
+
+paradigm to actually setup an environment and setup the missing tools for that language
+
+
