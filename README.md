@@ -11,7 +11,9 @@ Currently, the following scripts are supported
 
 ```bash
 
-curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-go.sh | bash
+curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-go-mac.sh | bash
+
+curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-go-apt.sh | bash
 
 
 ```
