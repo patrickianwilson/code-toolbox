@@ -51,7 +51,10 @@ if [ "$branch"="master" ] || [ "$branch"="web-service" ] || [ "$branch"="web-app
 
 	export GOPATH=`pwd`
 
-	go get github.com/mailgun/godebug
+	echo "Initializing Project Flavor"
+	./project-init.sh
+	rm project-init.sh
+
 
 	echo "New GoLang Project Initialized Successfully!"
 else
@@ -59,6 +62,23 @@ else
 fi
 
 
+command -v goapp >/dev/null 2>&1 || {
+	#should we install the app engine SDK?
+	read -p "Install the App Engine SDK for Go Development? [Yes]/No" installGaeSDK
+	if [ "$installGaeSDK"="No" ]; then
+		mkdir -p ~/.appengine
+		curl "https://storage.googleapis.com/appengine-sdks/featured/go_appengine_sdk_linux_amd64-1.9.30.zip" > ~/.appengine/gaeSDK.zip
+		cd ~/.appengine
+		unzip gaeSDK.zip
+		
+		#add the go_appengine binaries to the project path.
+		echo "Add the following to your bash profile file (either ~/.profile or ~/.bash_profile) and source it. "
+		echo 'export PATH=$PATH:~/.appengine/gaeSDK'
+		read -p "Is the path updated and sourced?" cont
+		echo "App Engine SDK Setup Complete!"
+	fi
+
+}
 
 
 
