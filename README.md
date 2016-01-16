@@ -10,12 +10,13 @@ paradigm to actually setup an environment and setup the missing tools for that l
 Currently, the following scripts are supported
 
 ```bash
-
+#Golang Development
 bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-go-mac.sh)
-
 bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-go-apt.sh)
 
-
+#Java Development
+bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-java-apt.sh)
+bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-java-apt.sh)
 ```
 
 
