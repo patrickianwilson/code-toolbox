@@ -11,12 +11,12 @@ Currently, the following scripts are supported
 
 ```bash
 #Golang Development
-bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-go-mac.sh)
-bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-go-apt.sh)
+bash <(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-go-mac.sh)
+bash <(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-go-apt.sh)
 
 #Java Development
-bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-java-mac.sh)
-bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-java-apt.sh)
+bash <(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-java-mac.sh)
+bash <(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-java-apt.sh)
 ```
 
 
