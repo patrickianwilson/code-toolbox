@@ -15,7 +15,7 @@ bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/m
 bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-go-apt.sh)
 
 #Java Development
-bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-java-apt.sh)
+bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-java-mac.sh)
 bash -c $(curl https://raw.githubusercontent.com/patrickianwilson/code-toolbox/master/setup-java-apt.sh)
 ```
 
