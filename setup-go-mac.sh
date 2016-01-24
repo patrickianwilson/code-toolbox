@@ -11,19 +11,50 @@ command -v go >/dev/null 2>&1 || { echo >&2 "Installing Go from Homebrew"; brew 
 #Sublime is the editor of choice for Golang programmers.
 command -v subl >/dev/null 2>&1 || { echo >&2 "Sublime Text is Not Properly Installed, Please Install from: http://www.sublimetext.com"; echo "you must also link the 'subl' command to your path: sudo ln -s \"/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl\" /bin/subl"; read -p "Press [Enter] Once the Above is complete..."; echo "Install the golang plugin for Sublime Text 2 as documented here: https://github.com/DisposaBoy/GoSublime"; read -p "Press [Enter] Once the Above Plugin Is Installed"; }
 
-curl https://codeload.github.com/patrickianwilson/template-golang-project/zip/master > temp.zip
-unzip temp.zip
-mv template-golang-project-master/* .
-rm -r template-golang-project-master
-rm temp.zip
 
-chmod +x *.sh
+read -p "Please specify a template flavor (master, web-service or web-app): " branch
 
-export GOPATH=`pwd`
+echo "Checking out \"$branch\""
 
-go get github.com/mailgun/godebug
+if [ "$branch"="master" ] || [ "$branch"="web-service" ] || [ "$branch"="web-app" ]; then
+	curl https://codeload.github.com/patrickianwilson/template-golang-project/zip/$branch > temp.zip
+	unzip temp.zip
+	mv template-golang-project-$branch/* .
+	rm -r template-golang-project-$branch
+	rm temp.zip
 
-echo "New GoLang Project Initialized Successfully!"
+	chmod +x *.sh
+
+	export GOPATH=`pwd`
+
+	echo "Initializing Project Flavor"
+	./project-init.sh
+	rm project-init.sh
+
+
+	echo "New GoLang Project Initialized Successfully!"
+else
+	echo "Invalid Project Flavor - please choose either \"master\", \"web-service\" or \"web-application\""
+fi
+
+
+# command -v goapp >/dev/null 2>&1 || {
+# 	#should we install the app engine SDK?
+# 	read -p "Install the App Engine SDK for Go Development? [Yes]/No" installGaeSDK
+# 	if [ "$installGaeSDK"="No" ]; then
+# 		mkdir -p ~/.appengine
+# 		curl "https://storage.googleapis.com/appengine-sdks/featured/go_appengine_sdk_linux_amd64-1.9.30.zip" > ~/.appengine/gaeSDK.zip
+# 		cd ~/.appengine
+# 		unzip gaeSDK.zip
+		
+# 		#add the go_appengine binaries to the project path.
+# 		echo "Add the following to your bash profile file (either ~/.profile or ~/.bash_profile) and source it. "
+# 		echo 'export PATH=$PATH:~/.appengine/gaeSDK'
+# 		read -p "Is the path updated and sourced?" cont
+# 		echo "App Engine SDK Setup Complete!"
+# 	fi
+
+# }
 
 
 
