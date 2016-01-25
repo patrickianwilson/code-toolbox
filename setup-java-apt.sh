@@ -40,7 +40,7 @@ command -v gradle >/dev/null 2>&1 || {
 
 cd $ROOT_PROJECT
 
-read -p "Please specify a template flavor (master [for vanilla], root-gradle-project or android): " branch
+read -p "Please specify a template flavor (master [for vanilla], root-gradle-project, swt-app, or android): " branch
 
 echo "Checking out \"$branch\""
 
