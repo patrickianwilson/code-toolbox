@@ -43,7 +43,7 @@ read -p "Please specify a template flavor (master [for vanilla], root-gradle-pro
 
 echo "Checking out \"$branch\""
 
-if [ "$branch"="master" ] || [ "$branch"="root-gradle-project" ] || [ "$branch"="android" ]; then
+if [ "$branch"="master" ] || [ "$branch"="root-gradle-project" ] || [ "$branch"="android" ] || [ "$branch"="swt-app" ]; then
 	curl https://codeload.github.com/patrickianwilson/template-java-project/zip/$branch > temp.zip
 	unzip temp.zip
 	mv template-java-project-$branch/* .
