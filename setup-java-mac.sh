@@ -2,10 +2,12 @@ echo "Setting Up Workstation for Golang Development"
 
 
 #Ensure HomeBrew is installed.  This is the package manager of choice for Mac OS
-command -v brew >/dev/null 2>&1 || { echo >&2 "Homebrew is required for these setup scripts but it's not installed.  Aborting."; exit 1; }
+command -v brew >/dev/null 2>&1 || { 
+	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+}
 
 
-#Is Go already installed?
+#Is Java already installed?
 command -v java >/dev/null 2>&1 || { 
 	echo >&2 "Installing Java from Home Brew"
 	brew update
@@ -15,14 +17,15 @@ command -v java >/dev/null 2>&1 || {
 
 
 
-#Sublime is the editor of choice for Java and Scripting programmers.
+#Sublime is the editor of choice for Golang programmers.
 command -v subl >/dev/null 2>&1 || { 
-	echo >&2 "Installing Sublime Text 3."
-	sudo add-apt-repository ppa:webupd8team/sublime-text-3
-	sudo apt-get update
-	sudo apt-get install sublime-text-installer
+	brew install caskroom/cask/brew-cask
+	brew tap caskroom/versions
+	brew cask install sublime-text3
 
+	echo "you must also link the 'subl' command to your path: sudo ln -s \"/Applications/Sublime Text 3.app/Contents/SharedSupport/bin/subl\" /usr/local/bin/subl"; read -p "Press [Enter] Once the Above is complete..."; echo "Install the golang plugin for Sublime Text 2 as documented here: https://github.com/DisposaBoy/GoSublime"; read -p "Press [Enter] Once the Above Plugin Is Installed"; 
 }
+
 
 ROOT_PROJECT=`pwd`
 #gradle is the build system of choice for java projects (including Android)
