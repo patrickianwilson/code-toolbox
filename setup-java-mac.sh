@@ -37,7 +37,7 @@ command -v gradle >/dev/null 2>&1 || {
 	sudo cp -r gradle-2.10 /opt/
 	sudo chmod -R 755 /opt/gradle-2.10
 	sudo rm -rf temp.zip gradle-2.10
-	sudo ln -s /opt/gradle-2.10/bin/gradle /usr/bin/gradle
+	sudo ln -s /opt/gradle-2.10/bin/gradle /usr/local/bin/gradle
 }
 
 cd $ROOT_PROJECT
