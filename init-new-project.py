@@ -35,7 +35,7 @@ langs = {
 # each lang in langs must have an associated dictionary in the nested map.
 flavorsMap = {
     'java': {'vanilla': 'master'},
-    'golang': {'vanilla': 'master'},
+    'golang': {'vanilla': 'master', 'web-app': 'web-app', 'web-service': 'web-service'},
     'cpp': {'vanilla': 'master'}
 
 }
@@ -55,6 +55,16 @@ def copytree(src, dst, symlinks=False, ignore=None):
             shutil.copytree(s, d, symlinks, ignore)
         else:
             shutil.copy2(s, d)
+
+
+def execute_and_possibly_remove(file, alsoRemove=False):
+    if os.path.isfile(file):
+        st = os.stat(file)
+        # make the file executable.
+        os.chmod(file, st.st_mode | stat.S_IEXEC)
+        result = subprocess.call("./{}".format(file), shell=True)
+        if result == 0 and alsoRemove:
+            os.remove(file)
 
 
 ##MAIN SCRIPT####
@@ -86,8 +96,8 @@ shutil.rmtree(rootDirname)
 
 print("Template project initialization starting")
 
-# if the project has an initial setup script (language/falvor specific)
-if os.path.isfile("project-init.sh"):
-    st = os.stat("project-init.sh")
-    os.chmod("project-init.sh", st.st_mode | stat.S_IEXEC)
-    subprocess.call("./project-init.sh", shell=True)
+# if the project has an initial setup script (language/flavor specific)
+execute_and_possibly_remove("project-init.sh", True)
+
+# if the project has an developer setup script(language/flavor specific)
+execute_and_possibly_remove("project-developer-setup.sh")
