@@ -36,7 +36,7 @@ langs = {
 flavorsMap = {
     'java': {'vanilla': 'master'},
     'golang': {'vanilla': 'master', 'web-app': 'web-app', 'web-service': 'web-service'},
-    'cpp': {'vanilla': 'master', 'cmake-root-project': 'cmake-root-project', 'cmake-subproj', 'cmake-subproj}
+    'cpp': {'vanilla': 'master', 'cmake-root-project': 'cmake-root-project', 'cmake-subproj': 'cmake-subproj}
 
 }
 
