@@ -34,7 +34,7 @@ langs = {
 
 # each lang in langs must have an associated dictionary in the nested map.
 flavorsMap = {
-    'java': {'vanilla': 'master'},
+    'java': {'vanilla': 'master', "root-gradle-project": "root-gradle-project", "android": "android", "swt-app": "swt-app", "web-appengine": "web-appengine", "web-vanilla": "web-vanilla"},
     'golang': {'vanilla': 'master', 'web-app': 'web-app', 'web-service': 'web-service'},
     'cpp': {'vanilla': 'master'}
 
