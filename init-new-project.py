@@ -29,15 +29,18 @@ import subprocess
 langs = {
     'java': 'template-java-project',
     'golang': 'template-golang-project',
-    'cpp': 'template-c-cpp-project'
+    'cpp': 'template-c-cpp-project',
+    'js': 'template-js-project',
+    'project': 'template-root-project'
 }
 
 # each lang in langs must have an associated dictionary in the nested map.
 flavorsMap = {
     'java': {'vanilla': 'master', "root-gradle-project": "root-gradle-project", "android": "android", "swt-app": "swt-app", "web-appengine": "web-appengine", "web-vanilla": "web-vanilla"},
     'golang': {'vanilla': 'master', 'web-app': 'web-app', 'web-service': 'web-service'},
-    'cpp': {'vanilla': 'master', 'cmake-root-project': 'cmake-root-project', 'cmake-subproj': 'cmake-subproj'}
-
+    'cpp': {'vanilla': 'master', 'cmake-root-project': 'cmake-root-project', 'cmake-subproj': 'cmake-subproj'},
+    'js': {'vanilla':'master'},
+    'project': {'default':'master'}
 }
 
 
