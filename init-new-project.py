@@ -66,7 +66,7 @@ def execute_and_possibly_remove(file, alsoRemove=False, envArgs={}):
         st = os.stat(file)
         # make the file executable.
         os.chmod(file, st.st_mode | stat.S_IEXEC)
-        result = subprocess.call("./{}".format(file), shell=True, env=envArgs)
+        result = subprocess.call(["./{}".format(file)], shell=True, env=envArgs)
         if result == 0 and alsoRemove:
             os.remove(file)
 
@@ -115,7 +115,12 @@ shutil.rmtree(rootDirname)
 print("Template project initialization starting")
 
 # if the project has an initial setup script (language/flavor specific)
-execute_and_possibly_remove("project-init.sh", True, {'ROOTPRJ': rootProjectDir})
+envMap = dict(os.environ.copy())
+if rootProjectDir is None:
+    rootProjectDir = ""
+envMap['ROOTPRJ'] = rootProjectDir
+
+execute_and_possibly_remove("project-init.sh", True, envMap)
 
 # if the project has an developer setup script(language/flavor specific)
 execute_and_possibly_remove("project-developer-setup.sh")
