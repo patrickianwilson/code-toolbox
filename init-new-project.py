@@ -61,12 +61,12 @@ def copytree(src, dst, symlinks=False, ignore=None):
             shutil.copy2(s, d)
 
 
-def execute_and_possibly_remove(file, alsoRemove=False):
+def execute_and_possibly_remove(file, alsoRemove=False, envArgs={}):
     if os.path.isfile(file):
         st = os.stat(file)
         # make the file executable.
         os.chmod(file, st.st_mode | stat.S_IEXEC)
-        result = subprocess.call("./{}".format(file), shell=True)
+        result = subprocess.call("./{}".format(file), shell=True, env=envArgs)
         if result == 0 and alsoRemove:
             os.remove(file)
 
@@ -74,20 +74,27 @@ def execute_and_possibly_remove(file, alsoRemove=False):
 ##MAIN SCRIPT####
 targetLang = raw_input('Please choose a language from [' + ", ".join(langs.keys()) + ']')
 
-if (targetLang != "project"):
-    if (os.getenv("ROOTPRJ","") != ""):
-        print "The selected project type is designed to be added to a root project.  Please initialize the root project with a .project-root file"
-        exitScript(1)
+pwd = os.getcwd();
+pwd = os.path.normpath(pwd)
+rootProjectDir = None
+while pwd != "/":
+    if os.path.isfile(pwd + "/settings.gradle"):
+        rootProjectDir = pwd
+    pwd = os.path.dirname(pwd)
 
 
-if (langs.has_key(targetLang) == False):
+if not langs.has_key(targetLang):
     print "Language " + targetLang + " not found"
     exitScript(1)
 
-targetFlavor = raw_input('Please choose a project \'flavor\' from [' + ", ".join(flavorsMap[targetLang].keys()) 
+if targetLang is not "project" and rootProjectDir is None:
+    print "This language must be initialized within a root project.  Please create a new project directory and initialize it with the 'project' language."
+    exit(1)
+
+targetFlavor = raw_input('Please choose a project \'flavor\' from [' + ", ".join(flavorsMap[targetLang].keys()) + "]")
 
 
-if flavorsMap.get(targetLang).has_key(targetFlavor) == False:
+if not flavorsMap[targetLang].has_key(targetFlavor):
     print "Language Flavor " + targetFlavor + " is not valid for language " + targetLang
     exitScript(2)
 
@@ -108,7 +115,7 @@ shutil.rmtree(rootDirname)
 print("Template project initialization starting")
 
 # if the project has an initial setup script (language/flavor specific)
-execute_and_possibly_remove("project-init.sh", True)
+execute_and_possibly_remove("project-init.sh", True, {'ROOTPRJ': rootProjectDir})
 
 # if the project has an developer setup script(language/flavor specific)
 execute_and_possibly_remove("project-developer-setup.sh")
