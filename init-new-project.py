@@ -87,7 +87,7 @@ if not langs.has_key(targetLang):
     print "Language " + targetLang + " not found"
     exitScript(1)
 
-if targetLang is not "project" and rootProjectDir is None:
+if targetLang != "project" and rootProjectDir is None:
     print "This language must be initialized within a root project.  Please create a new project directory and initialize it with the 'project' language."
     exit(1)
 
