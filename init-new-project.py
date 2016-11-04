@@ -34,6 +34,7 @@ langs = {
     'project': 'template-root-project'
 }
 
+
 # each lang in langs must have an associated dictionary in the nested map.
 flavorsMap = {
     'java': {'vanilla': 'master', "root-gradle-project": "root-gradle-project", "android": "android", "swt-app": "swt-app", "web-appengine": "web-appengine", "web-vanilla": "web-vanilla"},
@@ -73,13 +74,20 @@ def execute_and_possibly_remove(file, alsoRemove=False):
 ##MAIN SCRIPT####
 targetLang = raw_input('Please choose a language from [' + ", ".join(langs.keys()) + ']')
 
-if not langs.has_key(targetLang):
+if (targetLang != "project"):
+    if (os.getenv("ROOTPRJ","") != ""):
+        print "The selected project type is designed to be added to a root project.  Please initialize the root project with a .project-root file"
+        exitScript(1)
+
+
+if (langs.has_key(targetLang) == False):
     print "Language " + targetLang + " not found"
     exitScript(1)
 
-targetFlavor = raw_input('Please choose a project \'flavor\' from [' + ", ".join(flavorsMap[targetLang].keys()) + ']')
+targetFlavor = raw_input('Please choose a project \'flavor\' from [' + ", ".join(flavorsMap[targetLang].keys()) 
 
-if not flavorsMap.get(targetLang).has_key(targetFlavor):
+
+if flavorsMap.get(targetLang).has_key(targetFlavor) == False:
     print "Language Flavor " + targetFlavor + " is not valid for language " + targetLang
     exitScript(2)
 
