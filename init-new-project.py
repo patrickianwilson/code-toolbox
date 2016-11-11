@@ -41,7 +41,7 @@ flavorsMap = {
     'java': {'vanilla': 'master', "root-gradle-project": "root-gradle-project", "android": "android", "swt-app": "swt-app", "web-appengine": "web-appengine", "web-vanilla": "web-vanilla"},
     'golang': {'vanilla': 'master', 'web-app': 'web-app', 'web-service': 'web-service'},
     'cpp': {'vanilla': 'master', 'cmake-root-project': 'cmake-root-project', 'cmake-subproj': 'cmake-subproj'},
-    'js': {'vanilla':'master'},
+    'js': {'vanilla':'master', 'node-app':'node-app'},
     'project': {'default':'master'}
 }
 
@@ -57,9 +57,15 @@ def copytree(src, dst, symlinks=False, ignore=None):
         s = os.path.join(src, item)
         d = os.path.join(dst, item)
         if os.path.isdir(s):
-            shutil.copytree(s, d, symlinks, ignore)
+            try:
+                shutil.copytree(s, d, symlinks, ignore)
+            except OSError:
+                print "Folder already exists {}, skipping".format(s)
         else:
-            shutil.copy2(s, d)
+            try:
+                shutil.copy2(s, d)
+            except OSError:
+                print "File already exists {}, skipping".format(s)
 
 
 def execute_and_possibly_remove(file, alsoRemove=False, envArgs={}):
@@ -131,8 +137,8 @@ if not isRootProject:
         gradlePluginZipFileHandle = zipfile.ZipFile(gradlePluginsZipFile)
         targetExtractDir = rootProjectDir + "/config/gradle/" + targetLang;
         gradlePluginZipFileHandle.extractall(path=targetExtractDir)
-        copytree(rootProjectDir + "/config/gradle/java/gradle-templates-java", rootProjectDir + "/config/gradle/java/")
-        shutil.rmtree(rootProjectDir + "/config/gradle/java/gradle-templates-java")
+        copytree(rootProjectDir + "/config/gradle/{}/gradle-templates-{}".format(targetLang, targetLang), rootProjectDir + "/config/gradle/{}/".format(targetLang))
+        shutil.rmtree(rootProjectDir + "/config/gradle/{}/gradle-templates-{}".format(targetLang, targetLang))
     except BadZipfile:
         print "Warning: No gradle templates found for language {}".format(targetLang)
 
