@@ -25,6 +25,7 @@ import os
 import stat
 import shutil
 import subprocess
+from zipfile import BadZipfile
 
 langs = {
     'java': 'template-java-project',
@@ -87,7 +88,8 @@ if not langs.has_key(targetLang):
     print "Language " + targetLang + " not found"
     exitScript(1)
 
-if targetLang != "project" and rootProjectDir is None:
+isRootProject = (targetLang == "project");
+if isRootProject is False and rootProjectDir is None:
     print "This language must be initialized within a root project.  Please create a new project directory and initialize it with the 'project' language."
     exit(1)
 
@@ -119,6 +121,20 @@ envMap = dict(os.environ.copy())
 if rootProjectDir is None:
     rootProjectDir = ""
 envMap['ROOTPRJ'] = rootProjectDir
+
+
+#now we have to pull down the gradle scripts associated with this language flavor
+if not isRootProject:
+    gradlePluginsForLangZip = "https://github.com/patrickianwilson/gradle-templates/archive/{}.zip".format(targetLang);
+    gradlePluginsZipFile = wget.download(gradlePluginsForLangZip)
+    try:
+        gradlePluginZipFileHandle = zipfile.ZipFile(gradlePluginsZipFile)
+        targetExtractDir = rootProjectDir + "/config/gradle/" + targetLang;
+        gradlePluginZipFileHandle.extractall(path=targetExtractDir)
+        copytree(rootProjectDir + "/config/gradle/java/gradle-templates-java", rootProjectDir + "/config/gradle/java/")
+        shutil.rmtree(rootProjectDir + "/config/gradle/java/gradle-templates-java")
+    except BadZipfile:
+        print "Warning: No gradle templates found for language {}".format(targetLang)
 
 execute_and_possibly_remove("project-init.sh", True, envMap)
 
